@@ -27,5 +27,40 @@ public class PacienteController {
         //alternativa 2 -> return new ResponseEntity<>(pacientes, HttpStatus.OK);
     }
 
- 
+    @GetMapping("/{id}")
+    public  ResponseEntity <Paciente> listarunosolo(@PathVariable Integer id)
+    {
+          Paciente oPaciente= pacienteService.BuscarPorId(id);
+          return ResponseEntity.ok(oPaciente);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id)
+    {
+        pacienteService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Paciente> guardar(@RequestBody Paciente paciente)
+    {
+        Paciente pacienteNuevo = pacienteService.save(paciente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pacienteNuevo);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Paciente> modifcar(@PathVariable Integer id, @RequestBody Paciente paciente)
+{
+        Paciente pacienteMod = pacienteService.BuscarPorId(id);
+        pacienteMod.setId(id);
+        pacienteMod.setRun(paciente.getRun());
+        pacienteMod.setNombres(paciente.getNombres());
+        pacienteMod.setApellidos(paciente.getApellidos());
+        pacienteMod.setFechaNacimiento(paciente.getFechaNacimiento());
+        pacienteMod.setCorreo(paciente.getCorreo());
+        pacienteService.save(pacienteMod);
+
+        return ResponseEntity.ok(pacienteMod);
 }
+}
+

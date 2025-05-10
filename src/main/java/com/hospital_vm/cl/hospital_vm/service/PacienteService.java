@@ -15,11 +15,12 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public List<Paciente> findAll() {
+    public List<Paciente> BuscarTodosLosPacientes() {
+        
         return pacienteRepository.findAll();
     }
 
-    public Paciente findById(long id) {
+    public Paciente BuscarPorId(long id) {
         return pacienteRepository.findById(id).get();
     }
 
